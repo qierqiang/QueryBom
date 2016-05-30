@@ -787,7 +787,10 @@ Option Explicit
 
 Const HWND_TOPMOST = -1
 Const SWP_SHOWWINDOW = &H40
+Const iniFileName = "c:\colWidth.ini"
 
+Private Declare Function GetPrivateProfileString Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal lpDefault As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
+Private Declare Function WritePrivateProfileString Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyName As Any, ByVal lpString As Any, ByVal lpFileName As String) As Long
 Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 
 Dim m_billInfo As Recordset
@@ -819,10 +822,16 @@ Private Sub Form_load()
     '审核状态
     If m_billInfo.Fields("FStatus") = 0 Then lChecked.Visible = False
     
+    '加载列宽
+    LoadColWidths
     Exit Sub
 ex:
     MsgBox Err.Description, vbOKOnly, "金蝶提示"
     Err.Clear
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    SaveColWidths
 End Sub
 
 Private Sub FillForm()
@@ -864,3 +873,57 @@ Private Function NullCheck(ByVal value As Variant) As String
         NullCheck = VBA.CStr(value)
     End If
 End Function
+
+Private Sub LoadColWidths()
+    Dim i, w, nSize As Long
+    Dim s, nStr As String
+    
+    On Error Resume Next
+    nSize = 255: nStr = String(nSize, 0)
+    
+    For i = 0 To 27
+        GetPrivateProfileString "BomViewColWidth", CStr(i), "1000", nStr, nSize, iniFileName
+        w = CLng(nStr)
+        DataGrid1.Columns(i).Width = w
+    Next i
+End Sub
+
+Private Sub SaveColWidths()
+    Dim i As Integer
+    
+    On Error Resume Next
+    
+    For i = 0 To 27
+        WritePrivateProfileString "BomViewColWidth", CStr(i), CStr(DataGrid1.Columns(i).Width), iniFileName
+    Next i
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
