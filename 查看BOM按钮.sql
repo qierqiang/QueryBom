@@ -12,7 +12,7 @@ VALUES (70001,'btnQueryBom','查看BOM','查看BOM','Show BOM','43','查看BOM',
 --销售订单列表界面FID: 32, FMenuID: 100
 DELETE t_BandToolMapping WHERE FBandID=48 AND FToolID = 70001 AND FID = 100 
 INSERT INTO t_BandToolMapping (FID,FBandID,FToolID,FSubBandID,FIndex,FComName,FBeginGroup)
-VALUES (100,48,70001,0,62,'|SEOrderBOMQuery.QueryBom',0) 
+VALUES (100,48,70001,0,62,'|SEOrderBOMQuery.QueryBom',1) 
 
 --(3) 在销售订单序时薄显示按钮
 
