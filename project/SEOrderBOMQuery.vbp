@@ -1,7 +1,4 @@
 Type=OleDll
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
-Reference=*\G{BD29F730-5BDA-11D1-9C2A-127658000000}#1.0#0#C:\Program Files (x86)\Kingdee\K3ERP\KDSYSTEM\kfo10.dll#Kingdee Foundation Objects 1.0
-Reference=*\G{00000206-0000-0010-8000-00AA006D2EA4}#2.6#0#C:\Program Files (x86)\Common Files\System\ado\msado26.tlb#Microsoft ActiveX Data Objects 2.6 Library
 Reference=*\G{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0#C:\Windows\SysWOW64\FM20.DLL#Microsoft Forms 2.0 Object Library
 Object={CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0; MSDATGRD.OCX
 Class=QueryBom; QueryBom.cls

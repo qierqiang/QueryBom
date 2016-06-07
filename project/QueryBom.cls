@@ -36,7 +36,7 @@ Public Sub MainFunction(ByVal sKey As String, oList As Object, ByRef bCancel As 
             Dim interid As Long
             Dim entryid As Long
             Dim sql As String
-            Dim rs As ADODB.Recordset
+            Dim rs As Object 'ADODB.Recordset
             Dim bomid As Long
             
             interid = oList.ListSelectBillinfo(1)("FInterID")
@@ -45,6 +45,7 @@ Public Sub MainFunction(ByVal sKey As String, oList As Object, ByRef bCancel As 
             Prepare
             sql = "SELECT FInterID FROM ICBOM WHERE FUseStatus=1072 AND FItemID=(SELECT FItemID FROM SEOrderEntry WHERE FInterID=" & interid & " AND FEntryID=" & entryid & ")"
             Set rs = GetData(sql)
+            
             bomid = -1
             If Not rs.EOF Then bomid = rs.Fields(0)
             Set rs = Nothing
@@ -66,7 +67,7 @@ End Sub
 
 Private Sub showbom(ByVal bomid)
     Dim sql As String
-    Dim rsBill, rsEntry As ADODB.Recordset
+    Dim rsBill, rsEntry As Object ' ADODB.Recordset
     
     sql = "SELECT ICBom.FInterID, ICBom.FBOMNumber, ICBom.FVersion, ICBom.FUseStatus, t002.FID as  FUseStatusNumber, t002.FName as  FUseStatusName, ICBom.FItemID, t003.FNumber as  FItemIDNumber, t003.FName as  FItemIDName, t003.FQtyDecimal, " & _
         "t003.FPriceDecimal, t003.FUnitGroupID, ICBom.FUnitID, t004.FNumber as  FUnitIDNumber, t004.FName as  FUnitIDName, t003.FName as FName, t003.FModel as FModel,(SELECT FName FROM t_SubMessage WHERE t003.FErpClsID=FInterID) as FErpClsID, " & _
@@ -224,14 +225,16 @@ Private Sub Prepare()
 End Sub
 
 'Ö´ÐÐSQL£¬·µ»Ørecordset
-Private Function GetData(ByVal strSql As String) As ADODB.Recordset
-    Dim cn As New ADODB.Connection
-    Dim rs As New ADODB.Recordset
+Private Function GetData(ByVal strSql As String) As Object ' ADODB.Recordset
+    Dim cn As Object 'New ADODB.Connection
+    Dim rs As Object 'New ADODB.Recordset
     
+    Set cn = CreateObject("ADODB.Connection")
+    Set rs = CreateObject("ADODB.Recordset")
     cn.ConnectionString = strConn
-    cn.CursorLocation = adUseClient
+    cn.CursorLocation = 3
     cn.Open
-    rs.Open strSql, cn, adOpenDynamic, adLockPessimistic
+    rs.Open strSql, cn, 2, 2
     Set GetData = rs
     Set rs = Nothing
     Set cn = Nothing

@@ -793,14 +793,14 @@ Private Declare Function GetPrivateProfileString Lib "kernel32" Alias "GetPrivat
 Private Declare Function WritePrivateProfileString Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyName As Any, ByVal lpString As Any, ByVal lpFileName As String) As Long
 Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 
-Dim m_billInfo As Recordset
-Dim m_entryInfo As Recordset
+Dim m_billInfo As Object 'Recordset
+Dim m_entryInfo As Object 'Recordset
 
-Public Property Set BillInfo(ByRef value As Recordset)
+Public Property Set BillInfo(ByRef value As Object)
     Set m_billInfo = value
 End Property
 
-Public Property Set EntryInfo(ByRef value As Recordset)
+Public Property Set EntryInfo(ByRef value As Object)
     Set m_entryInfo = value
 End Property
 
